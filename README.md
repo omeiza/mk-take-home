@@ -14,7 +14,7 @@ To get started with this:
 -   Run `npm install` to install dependencies from package.json
 -   Run `npm start` to start the server and play around with the application
 
-## ⚙️ Configuration
+## ⚙️ Point to note
 Here are some items within application that are obvious to see, but could easily be missed
 -   Since there is no requirement to persist the data we are working with within the application, the application uses a data house within `src/data.ts` that is only available when the application is running.
 -   The codebase is well commented to explain what is going on at each block.
