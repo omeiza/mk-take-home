@@ -1,19 +1,11 @@
-import express, { Express } from "express";
-import inventoryRoute from "./routes/inventory.route";
-import showRoute from "./routes/show.route";
+/**
+ * Application bootstrap/start-point
+ * NOTE: This was an intentional abstraction to avoid calling listen before tests
+ */
 
-// Server
-const app: Express = express();
-const port = 6190;
+import app from "./app";
+const port = process.env.PORT ?? '4090';
 
-// Routes
-app.use("/inventory", inventoryRoute);
-app.use("/show", showRoute);
-
-// App init
 app.listen(port, () => {
 	console.log(`MAKA live is currently running on port ${port}`);
 });
-
-// For the purpose of unit testing
-export default app;

@@ -1,9 +1,7 @@
 import { InventoryTypes } from "./routes/inventory.route";
 import { ShowTypes } from "./routes/show.route";
 
-/**
- * Data types
- */
+// Data types
 export type DataTypes = {
 	inventory: InventoryTypes[],
 	show: ShowTypes[]

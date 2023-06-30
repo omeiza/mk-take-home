@@ -1,0 +1,163 @@
+openapi: 3.0.3
+info:
+  title: MAKA live
+  description: API for MAKALife live
+  contact:
+    name: omeiza
+    email: owudaomeiza@gmail.com
+  version: "1.0"
+paths:
+  /inventory:
+    post:
+      description: Add or update inventory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/inventory"
+      responses:
+        200:
+          $ref: "#/components/responses/ok"
+        400:
+          $ref: "#/components/responses/invalidRequest"
+  /show/{show_ID}/buy_item:
+    parameters:
+      - name: show_ID
+        in: path
+        description: Show id
+        required: true
+        schema:
+          type: integer
+    get:
+      description: Get show item(s)
+      responses:
+        200:
+          description: Show item(s)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/showItemsResponse"
+        400:
+          $ref: "#/components/responses/invalidRequest"
+        404:
+          $ref: "#/components/responses/notFound"
+  /show/{show_ID}/buy_item/{item_ID}:
+    parameters:
+      - name: show_ID
+        in: path
+        description: Show id
+        required: true
+        schema:
+          type: integer
+      - name: item_ID
+        in: path
+        description: Item id
+        required: true
+        schema:
+          type: integer
+    post:
+      description: Buy a single item during a show
+      responses:
+        200:
+          $ref: "#/components/responses/ok"
+        400:
+          $ref: "#/components/responses/invalidRequest"
+        404:
+          $ref: "#/components/responses/notFound"
+    get:
+      description: Get show item(s)
+      responses:
+        200:
+          description: Show item(s)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inventoryItemResponse"
+        400:
+          $ref: "#/components/responses/invalidRequest"
+        404:
+          $ref: "#/components/responses/notFound"
+
+# Components
+components:
+  responses:
+    ok:
+      description: "Success"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+    invalidRequest:
+      description: "Bad Request"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+    notFound:
+      description: "Resource not found"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+  schemas:
+    inventory:
+      type: array
+      items:
+        $ref: "#/components/schemas/inventoryItem"
+    inventoryItem:
+      type: object
+      required:
+        - itemID
+        - itemName
+        - quantity
+      properties:
+        itemID:
+          type: integer
+        itemName:
+          type: string
+        quantity:
+          type: integer
+    inventoryItemResponse:
+      type: object
+      required:
+        - itemID
+        - itemName
+        - quantity_sold
+      properties:
+        itemID:
+          type: integer
+        itemName:
+          type: string
+        quantity:
+          type: integer
+    show:
+      type: object
+      required:
+        - showId
+        - items
+      properties:
+        showId:
+          type: integer
+        items:
+          type: array
+          properties:
+            itemID:
+              type: integer
+            itemName:
+              type: string
+            quantity_sold:
+              type: integer
+    showItemsResponse:
+      type: array
+      items:
+        $ref: "#/components/schemas/inventoryItemResponse"
